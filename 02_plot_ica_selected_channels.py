@@ -3,7 +3,7 @@
 
 # filename: 02_plot_ica_selected_channels.py
 
-from bieg import plot_ica_components, get_biosemi_indices
+from bieg import ICAManager, get_biosemi_indices
 import os
 # bieg -- [B]lind source separation [I]ndependent component analysis
 #    for [E]e[G]
@@ -27,16 +27,22 @@ input_filepath = os.path.join(os.environ['HOME'],
 # Select some electrodes.
 picks = get_biosemi_indices(['A10', 'A15', 'A21', 'A23', 'A28', 'B7', 'C17'])
 
-# Number of components to extract (optional).
-# If ``None`` then take as many as possible (the number of channels picked).
-#
-#  n_components = 4
 
-plot_ica_components(input_filepath, picks=picks)
+# Create an object to govern the analysis.
+bss_ica = ICAManager(input_filepath, picks=picks)
 #
 # If data is saved in txt, csv or tsv format you also have to specify the
 # separator, sep='' argument (by default sep='\t').
 
-# If number of components is to be specified.
+# Number of components to extract (optional). By default the n_components
+# variable is set to None. Then all PCA components are used, for reference see:
+# https://martinos.org/mne/stable/generated/mne.preprocessing.ICA.html#mne.preprocessing.ICA
+# If ``None`` then take as many as possible (the number of channels picked).
 #
-#  plot_ica_components(input_filepath, picks=picks, n_components=n_components)
+#  n_components = 4
+
+# If number of components is to be specified.
+#  bss_ica = ICAManager(input_filepath, n_components, picks=picks)
+
+# Finally, visualize components.
+bss_ica.plot_ica_components()
