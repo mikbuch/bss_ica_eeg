@@ -115,7 +115,7 @@ class ICAManager(object):
         if not self.raw or reload_dataset:
             self.create_MNE_Raw(filter=filter)
         # On ArchLinux, for unkown reason this works only within ipython
-        # environement (probably display manger issue).
+        # environement (probably display manager issue).
         self.raw.plot(order=self.picks, scalings={'eeg': 100.0})
 
 

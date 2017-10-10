@@ -29,7 +29,9 @@ picks = get_biosemi_indices(['A10', 'A15', 'A21', 'A23', 'A28', 'B7', 'C17'])
 
 
 # Create an object to govern the analysis.
-bss_ica = ICAManager(input_filepath, picks=picks)
+# Available ICA methods: 'fastica', 'infomax' xor 'extended-infomax'.
+# TODO: add 'amuse'
+bss_ica = ICAManager(input_filepath, picks=picks, method='fastica')
 
 
 '''
@@ -46,14 +48,21 @@ II. Decide which components to remove.
 It has to be indices! (counting starts from 0)
 '''
 
-print('\nEnter the indices of the components you would like to exclude.')
-print('Separated by space, accept with return key.\n')
+print('')
+print(' #################################################################')
+print(' # Enter the indices of the components you would like to exclude.')
+print(' # Separated the indices with space, accept with the return key.')
+print(' #')
+print(' # By default the first and the last one components are excluded.')
+print(' # i.e. \'0 6\'.\n')
 components_to_exclude = input()
 
-# First one and the last one.
-#  components_to_exclude=[0, 5]
+if components_to_exclude == '':
+    components_to_exclude = [0, len(bss_ica.picks)-1]
+else:
+    components_to_exclude = [int(i) for i in components_to_exclude.split(' ')]
 
-components_to_exclude = [int(i) for i in components_to_exclude.split(' ')]
+print('\n # Components to exclude: %s\n\n' % components_to_exclude)
 
 '''
 III. Exclude selected components.
