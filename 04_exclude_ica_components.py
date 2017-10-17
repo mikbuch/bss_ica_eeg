@@ -22,7 +22,7 @@ Tasks:
 
 # Input file location.
 input_filepath = os.path.join(os.environ['HOME'],
-                     'mne_data/SSVEP-sample/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
+                 'eeg_data/SSVEP_Bakardjian/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
 
 # Select some electrodes.
 picks = get_biosemi_indices(['A10', 'A15', 'A21', 'A23', 'A28', 'B7', 'C17'])
@@ -48,14 +48,14 @@ II. Decide which components to remove.
 It has to be indices! (counting starts from 0)
 '''
 
-print('')
-print(' #################################################################')
-print(' # Enter the indices of the components you would like to exclude.')
-print(' # Separated the indices with space, accept with the return key.')
-print(' #')
-print(' # By default the first and the last one components are excluded.')
-print(' # i.e. \'0 6\'.\n')
-components_to_exclude = input()
+info = '\n' \
+       ' #################################################################\n' \
+       ' # Enter the indices of the components you would like to exclude.\n' \
+       ' # Separated the indices with space, accept with the return key.\n' \
+       ' #\n' \
+       ' # By default the first and the last one components are excluded.\n' \
+       ' # i.e. \'0 6\'.\n\n'
+components_to_exclude = raw_input(info)
 
 if components_to_exclude == '':
     components_to_exclude = [0, len(bss_ica.picks)-1]

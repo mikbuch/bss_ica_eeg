@@ -35,6 +35,8 @@ class ICAManager(object):
         self.kind = kind
         self.sfreq = sfreq
 
+        # Has to be initialized here for conditional statements later on.
+        self.raw = None
 
     def load_matlab_data(self):
         # Convert to numpy.
@@ -42,10 +44,8 @@ class ICAManager(object):
         # Extract the variable of interest.
         self.data = self.data[self.var_name]
 
-
     def load_csv_data(self):
         self.data = np.load_txt(self.input_path, delimiter=self.sep)
-
 
     def load_coords(self, scale_0_1=True):
         coords = np.loadtxt(self.input_path, sep=self.sep)
@@ -53,7 +53,6 @@ class ICAManager(object):
             coords = preprocessing.MinMaxScaler().fit_transform(coords)
 
         return coords
-
 
     def create_MNE_Raw(self, filter=(1, 40)):
         '''
@@ -98,7 +97,6 @@ class ICAManager(object):
         if filter:
             self.raw.filter(filter[0], filter[1], n_jobs=2)
 
-
     def load_data(self):
         ext = os.path.splitext(self.input_path)[-1].lower()
         if 'mat' in ext:
@@ -109,17 +107,15 @@ class ICAManager(object):
             print('File extention not recognized.')
             print('Please, use one of the following: mat, txt, csv or tsv.')
 
-
-    def plot_timecourse(self, filter=(1,40), reload_dataset=True):
+    def plot_timecourse(self, filter=(1, 40), reload_dataset=True):
 
         if not self.raw or reload_dataset:
             self.create_MNE_Raw(filter=filter)
         # On ArchLinux, for unkown reason this works only within ipython
         # environement (probably display manager issue).
-        self.raw.plot(order=self.picks, scalings={'eeg': 100.0})
+        self.raw.plot(order=self.picks, scalings={'eeg': 100.0}, title='Raw')
 
-
-    def plot_timecourse_mpl(self, filter=(1,40), reload_dataset=True,
+    def plot_timecourse_mpl(self, filter=(1, 40), reload_dataset=True,
                             show=True):
 
         if not self.raw or reload_dataset:
@@ -131,10 +127,9 @@ class ICAManager(object):
         for (i, no) in enumerate(self.picks):
             plt.subplot(len(self.picks), 1, i+1)
             plt.plot(data[no])
-        
+
         if show:
             plt.show()
-
 
     def extract_components(self):
 
@@ -147,11 +142,11 @@ class ICAManager(object):
         # ICA parameters:
 
         # we need sufficient statistics, not all time points -> saves time
-        decim = 3  
+        decim = 3
 
         # we will also set state of the random number generator - ICA is a
         # non-deterministic algorithm, but we want to have the same
-        # decomposition and the same order of components each time 
+        # decomposition and the same order of components each time
         random_state = 23
 
         #######################################################################
@@ -167,20 +162,17 @@ class ICAManager(object):
         self.ica.fit(self.raw, picks=self.picks, decim=decim, reject=reject)
         print(self.ica)
 
-
     def plot_ica_components(self, plot_picks=None):
 
         self.extract_components()
 
         self.ica.plot_components(layout=self.layout, picks=plot_picks)
 
-
     def plot_ica_sources(self):
 
         self.extract_components()
 
         self.ica.plot_sources(self.raw)
-    
 
     def exclude_ica_components(self, components_to_exclude):
 
