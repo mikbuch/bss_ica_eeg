@@ -25,6 +25,32 @@ class ICAManager(object):
     def __init__(self, input_path, n_components=None, picks=None,
                  method='fastica', var_name='EEGdata', sep=None,
                  kind='biosemi128', sfreq=256):
+	 """Create ICA object.
+
+	Specify some basic settings and variables.
+
+	Parameters
+	----------
+	input_path : str
+            Location of the file with data.
+	n_components : int, optional
+            How many components to extract. If left default (None) then the
+            maximal number of components will be extracted.
+        pick : list of ints, optional
+            Specify the electrodes you would like to choose, else all will
+            be taken.
+        method : {'fastica', 'infomax', 'extended_infomax', 'amuse'}, optional
+            Which BSS method to use.
+        var_name : {'EEGdata'}, optional
+            Name of the variable within MATLAB input file.
+        sep : str
+            Separator to pass to load data from txt.
+        kind : {'biosemi128'}
+            Electrodes setup.
+        sfreq : {256}
+            Sampling frequency.
+            
+	"""
 
         self.input_path = input_path
         self.n_components = n_components
@@ -96,7 +122,7 @@ class ICAManager(object):
         self.raw = mne.io.RawArray(self.data, info)
 
         if filter:
-            self.raw.filter(filter[0], filter[1], n_jobs=2)
+            self.raw.filter(filter[0], filter[1], n_jobs=1)
 
 
     def load_data(self):
