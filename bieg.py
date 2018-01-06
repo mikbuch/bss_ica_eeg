@@ -121,6 +121,9 @@ class ICAManager(object):
         self.raw = mne.io.RawArray(self.data, info)
 
         if filter:
+            # Parameters:
+            # https://github.com/mne-tools/mne-python/blob/maint/0.15/mne/io/
+            # base.py#L253-L2107
             self.raw.filter(filter[0], filter[1], n_jobs=1)
 
     def load_data(self):
