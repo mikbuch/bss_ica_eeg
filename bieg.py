@@ -25,15 +25,15 @@ class ICAManager(object):
     def __init__(self, input_path, n_components=None, picks=None,
                  method='fastica', var_name='EEGdata', sep=None,
                  kind='biosemi128', sfreq=256):
-	 """Create ICA object.
+        """Create ICA object.
 
-	Specify some basic settings and variables.
+        Specify some basic settings and variables.
 
-	Parameters
-	----------
-	input_path : str
+        Parameters
+        ----------
+        input_path : str
             Location of the file with data.
-	n_components : int, optional
+        n_components : int, optional
             How many components to extract. If left default (None) then the
             maximal number of components will be extracted.
         pick : list of ints, optional
@@ -49,8 +49,7 @@ class ICAManager(object):
             Electrodes setup.
         sfreq : {256}
             Sampling frequency.
-            
-	"""
+        """
 
         self.input_path = input_path
         self.n_components = n_components
@@ -71,7 +70,7 @@ class ICAManager(object):
         self.data = self.data[self.var_name]
 
     def load_csv_data(self):
-        self.data = np.load_txt(self.input_path, delimiter=self.sep)
+        self.data = np.loadtxt(self.input_path, delimiter=self.sep)
 
     def load_coords(self, scale_0_1=True):
         coords = np.loadtxt(self.input_path, sep=self.sep)

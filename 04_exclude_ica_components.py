@@ -22,7 +22,7 @@ Tasks:
 
 # Input file location.
 input_filepath = os.path.join(os.environ['HOME'],
-                 'eeg_data/SSVEP_Bakardjian/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
+              'eeg_data/SSVEP_Bakardjian_MAT/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
 
 # Select some electrodes.
 picks = get_biosemi_indices(['A10', 'A15', 'A21', 'A23', 'A28', 'B7', 'C17'])
@@ -55,7 +55,7 @@ info = '\n' \
        ' #\n' \
        ' # By default the first and the last one components are excluded.\n' \
        ' # i.e. \'0 6\'.\n\n'
-components_to_exclude = raw_input(info)
+components_to_exclude = input(info)
 
 if components_to_exclude == '':
     components_to_exclude = [0, len(bss_ica.picks)-1]

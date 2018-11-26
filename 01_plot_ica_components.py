@@ -22,7 +22,7 @@ Tasks:
 
 # Input file location.
 input_filepath = os.path.join(os.environ['HOME'],
-                 'eeg_data/SSVEP_Bakardjian/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
+              'eeg_data/SSVEP_Bakardjian_MAT/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
 
 # Create an object to govern the analysis.
 bss_ica = ICAManager(input_filepath)

@@ -23,7 +23,7 @@ Tasks:
 
 # Input file location.
 input_filepath = os.path.join(os.environ['HOME'],
-                 'eeg_data/SSVEP_Bakardjian/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
+              'eeg_data/SSVEP_Bakardjian_MAT/SUBJ1/SSVEP_14Hz_Trial1_SUBJ1.MAT')
 
 # Select some electrodes.
 picks = get_biosemi_indices(['A10', 'A15', 'A21', 'A23', 'A28', 'B7', 'C17'])
@@ -47,7 +47,7 @@ in separate figure.
 bss_ica.plot_timecourse()
 
 # Press any key. Without this pause, the canvas is overwritten automatically.
-raw_input('\n ***PAUSED*** Press return key to proceed ...\n')
+input('\n ***PAUSED*** Press return key to proceed ...\n')
 
 # Second method.
 bss_ica.plot_timecourse_mpl()
